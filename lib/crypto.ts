@@ -163,7 +163,7 @@ export async function decodeMessage(file: File, key: string): Promise<string> {
               const x = Math.floor(j * cellSize + cellSize / 2); // Center of each cell
               const y = Math.floor(i * cellSize + cellSize / 2);
               const pixel = ctx.getImageData(x, y, 1, 1).data; // Get pixel at the center
-              let blueValue = pixel[2]; // Blue component (B)
+              const blueValue = pixel[2]; // Blue component (B)
 
               // Check if the blue value is within the valid range (200-255)
               if (blueValue < validBlueRange[0] || blueValue > validBlueRange[1]) {

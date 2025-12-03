@@ -20,8 +20,10 @@ export default function DecodeSection() {
     try {
       const message = await decodeMessage(file, key)
       setDecodedMessage(message)
-    } catch (err: any) {
-      alert(err?.message || 'Decode failed')
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Decode failed'
+      alert(message)
     }
   }
 

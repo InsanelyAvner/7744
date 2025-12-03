@@ -17,13 +17,17 @@
     "framer-motion": "^11.11.17",
     "lucide-react": "^0.461.0",
     "next": "14.2.18",
+    "pg": "^8.16.0",
+    "pngjs": "^7.0.0",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pg": "^8.15.2",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

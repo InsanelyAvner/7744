@@ -1,3 +1,4 @@
+// components/decode-section.tsx
 'use client'
 
 import { useState, useRef } from 'react'
@@ -13,59 +14,48 @@ export default function DecodeSection() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleDecode = async () => {
-    const fileInput = fileInputRef.current
-    if (fileInput && fileInput.files && fileInput.files[0] && key) {
-      const file = fileInput.files[0]
+    const file = fileInputRef.current?.files?.[0]
+    if (!file || !key) return
+
+    try {
       const message = await decodeMessage(file, key)
       setDecodedMessage(message)
+    } catch (err: any) {
+      alert(err?.message || 'Decode failed')
     }
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="space-y-6"
-    >
+    <motion.div className="space-y-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="space-y-4">
         <div>
-          <Label htmlFor="decode-image" className="text-sm font-medium text-gray-700">Upload Grid Image</Label>
-          <Input
-            id="decode-image"
-            type="file"
-            accept="image/png, image/jpeg"
-            ref={fileInputRef}
-            className="mt-1"
-          />
+          <Label htmlFor="decode-image">Upload Grid Image</Label>
+          <Input type="file" accept="image/png, image/jpeg" ref={fileInputRef} />
         </div>
         <div>
-          <Label htmlFor="decode-key" className="text-sm font-medium text-gray-700">Key</Label>
+          <Label htmlFor="decode-key">Key</Label>
           <Input
-            id="decode-key"
             type="text"
-            placeholder="Enter the key used for encoding..."
+            placeholder="Enter key..."
             value={key}
-            onChange={(e) => setKey(e.target.value)}
-            className="mt-1"
+            onChange={e => setKey(e.target.value)}
           />
         </div>
-        <Button onClick={handleDecode} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-          Decode Message
-        </Button>
+        <Button onClick={handleDecode} className="w-full">Decode Message</Button>
       </div>
+
       {decodedMessage && (
         <motion.div
-          className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200"
+          className="mt-8 p-4 bg-gray-50 rounded border"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
         >
-          <h3 className="text-lg font-semibold mb-2 text-gray-900">Decoded Message:</h3>
-          <p className="text-gray-700">{decodedMessage}</p>
+          <h3 className="font-semibold mb-2">Decoded Message:</h3>
+          <pre className="whitespace-pre-wrap break-words">
+            {decodedMessage}
+          </pre>
         </motion.div>
       )}
     </motion.div>
   )
 }
-

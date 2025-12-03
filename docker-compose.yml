@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: 7744
+    container_name: encrypt7744
     environment:
       - NODE_ENV=production
     restart: unless-stopped
